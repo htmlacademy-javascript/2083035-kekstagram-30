@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { addValidator, validatePristine, resetPristine } from './validation.js';
+import { resetScale } from './img-scale.js';
+import { resetEffects, hideSlider } from './img-effects.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImgInput = document.querySelector('.img-upload__input');
@@ -7,6 +9,7 @@ const uploadFormModal = document.querySelector('.img-upload__overlay');
 const formCloseButtom = document.querySelector('.img-upload__cancel');
 
 const openForm = () => {
+    hideSlider();
     uploadFormModal.classList.remove('hidden');
     document.body.classList.add('modal-open');
     formCloseButtom.addEventListener('click', onCloseButtonClick);
@@ -16,6 +19,8 @@ const openForm = () => {
 const hideForm = () => {
     uploadForm.reset();
     resetPristine();
+    resetScale();
+    resetEffects();
     uploadFormModal.classList.add('hidden');
     document.body.classList.remove('modal-open');
     formCloseButtom.addEventListener('click', onCloseButtonClick);
