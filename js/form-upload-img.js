@@ -2,6 +2,8 @@ import { isEscapeKey } from './util.js';
 import { addValidator, validatePristine, resetPristine } from './validation.js';
 import { resetScale } from './img-scale.js';
 import { resetEffects, hideSlider } from './img-effects.js';
+import { sendData } from './api.js';
+import { showSuccessSendDataMessage, showErrorSendDataMessage } from './user-message.js'
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImgInput = document.querySelector('.img-upload__input');
@@ -42,15 +44,20 @@ function onUploadInputChange() {
     openForm();
 };
 
-function onFormSubmit(evt) {
-    evt.preventDefault();
-    validatePristine();
-}
-
-const setForm = () => {
+const setFormSubmit = (onSuccess) => {
     uploadImgInput.addEventListener('change', onUploadInputChange);
-    uploadForm.addEventListener('submit', onFormSubmit);
+    uploadForm.addEventListener('submit', (evt) => {
+        evt.preventDefault();
+
+        const isValid = validatePristine();
+        if (isValid) {
+            sendData(new FormData(evt.target))
+                .then(onSuccess)
+                .then(showSuccessSendDataMessage)
+                .catch(showErrorSendDataMessage)
+        }
+    });
     addValidator();
 };
 
-export { setForm };
+export { setFormSubmit, hideForm };
