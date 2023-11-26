@@ -40,8 +40,18 @@ function onDocumentKeydown(evt) {
     }
 };
 
-function onUploadInputChange() {
-    openForm();
+function onUploadInputChange(evt) {
+    const input = evt.target;
+    const file = input.files[0];
+    const reader = new FileReader();
+    const imgContainer = document.querySelector('.img-upload__preview');
+    const img = imgContainer.querySelector('img');
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        img.src = reader.result;
+
+        openForm();
+    };
 };
 
 const setFormSubmit = (onSuccess) => {
