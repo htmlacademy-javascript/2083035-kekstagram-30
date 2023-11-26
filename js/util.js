@@ -32,4 +32,13 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
   return arrayNoRepeats.size === toUpper.length;
 };
 
-export { getRandomInteger, getRandomArrayElement, isEscapeKey, checkLength, checkRepeats, showAlert };
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { getRandomInteger, getRandomArrayElement, isEscapeKey, checkLength, checkRepeats, showAlert, debounce };
