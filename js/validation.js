@@ -14,29 +14,29 @@ const hashtagInput = uploadForm.querySelector('[name="hashtags"]');
 const commentInput = uploadForm.querySelector('[name="description"]');
 
 const pristine = new Pristine(uploadForm, {
-    classTo: 'img-upload__field-wrapper',
-    errorTextParent: 'img-upload__field-wrapper',
-    errorTextTag: 'div',
-    errorTextClass: 'text__error'
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  errorTextClass: 'text__error'
 });
 
 const checkHasHash = () => hashtagInput.value !== '' ? hashtagInput.value
-    .trim()
-    .split(' ')
-    .filter(Boolean)
-    .every((hashtag) => HASHTAG_REGEX.test(hashtag)) : true;
+  .trim()
+  .split(' ')
+  .filter(Boolean)
+  .every((hashtag) => HASHTAG_REGEX.test(hashtag)) : true;
 const checkMaxQuantity = () => checkLength(hashtagInput.value.split(' ').filter(Boolean), HASHTAG_MAX_QUANTITY);
 const checkNoRepetitions = () => checkRepeats(hashtagInput.value.split(' ').filter(Boolean));
 const checkMaxLengthComment = () => checkLength(commentInput.value, COMMENT_MAX_LENGTH);
 
 const addValidator = () => {
-    pristine.addValidator(hashtagInput, checkHasHash, INVALID_HESHTAG_SYMBOLS);
-    pristine.addValidator(hashtagInput, checkMaxQuantity, INVALID_HESHTAG_COUNT);
-    pristine.addValidator(hashtagInput, checkNoRepetitions, INVALID_HESHTAG_UNIQUE);
-    pristine.addValidator(commentInput, checkMaxLengthComment, INVALID_COMMENT_LENGTH);
+  pristine.addValidator(hashtagInput, checkHasHash, INVALID_HESHTAG_SYMBOLS);
+  pristine.addValidator(hashtagInput, checkMaxQuantity, INVALID_HESHTAG_COUNT);
+  pristine.addValidator(hashtagInput, checkNoRepetitions, INVALID_HESHTAG_UNIQUE);
+  pristine.addValidator(commentInput, checkMaxLengthComment, INVALID_COMMENT_LENGTH);
 };
 
 const validatePristine = () => pristine.validate();
 const resetPristine = () => pristine.reset();
 
-export { addValidator, validatePristine, resetPristine }
+export { addValidator, validatePristine, resetPristine };

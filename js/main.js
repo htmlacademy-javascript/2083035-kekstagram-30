@@ -7,7 +7,7 @@ import { initFilter } from './sort.js';
 getData()
   .then((posts) => {
     renderPicturesGallery(posts);
-    initFilter(posts)
+    initFilter(posts);
   })
   .catch(
     (err) => {
