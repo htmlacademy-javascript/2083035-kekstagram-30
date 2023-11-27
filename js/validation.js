@@ -10,33 +10,32 @@ const INVALID_HESHTAG_UNIQUE = 'Хэштеги не могут повторят�
 const INVALID_COMMENT_LENGTH = `Максимальная длина комментария ${COMMENT_MAX_LENGTH} символов`;
 
 const uploadForm = document.querySelector('.img-upload__form');
-const hashtagInput = uploadForm.querySelector('[name="hashtags"]');
-const commentInput = uploadForm.querySelector('[name="description"]');
+const hashtagInput = document.querySelector('[name="hashtags"]');
+const commentInput = document.querySelector('[name="description"]');
+
+const createHashtage = (value) => value.trim().split(' ').filter(Boolean);
 
 const pristine = new Pristine(uploadForm, {
-    classTo: 'img-upload__field-wrapper',
-    errorTextParent: 'img-upload__field-wrapper',
-    errorTextTag: 'div',
-    errorTextClass: 'text__error'
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  errorTextClass: 'text__error'
 });
 
-const checkHasHash = () => hashtagInput.value !== '' ? hashtagInput.value
-    .trim()
-    .split(' ')
-    .filter(Boolean)
-    .every((hashtag) => HASHTAG_REGEX.test(hashtag)) : true;
-const checkMaxQuantity = () => checkLength(hashtagInput.value.split(' ').filter(Boolean), HASHTAG_MAX_QUANTITY);
-const checkNoRepetitions = () => checkRepeats(hashtagInput.value.split(' ').filter(Boolean));
+const checkHasHash = (value) => hashtagInput.value !== '' ? createHashtage(value)
+  .every((hashtag) => HASHTAG_REGEX.test(hashtag)) : true;
+const checkMaxQuantity = (value) => checkLength(createHashtage(value), HASHTAG_MAX_QUANTITY);
+const checkNoRepetitions = (value) => checkRepeats(createHashtage(value));
 const checkMaxLengthComment = () => checkLength(commentInput.value, COMMENT_MAX_LENGTH);
 
 const addValidator = () => {
-    pristine.addValidator(hashtagInput, checkHasHash, INVALID_HESHTAG_SYMBOLS);
-    pristine.addValidator(hashtagInput, checkMaxQuantity, INVALID_HESHTAG_COUNT);
-    pristine.addValidator(hashtagInput, checkNoRepetitions, INVALID_HESHTAG_UNIQUE);
-    pristine.addValidator(commentInput, checkMaxLengthComment, INVALID_COMMENT_LENGTH);
+  pristine.addValidator(hashtagInput, checkHasHash, INVALID_HESHTAG_SYMBOLS);
+  pristine.addValidator(hashtagInput, checkMaxQuantity, INVALID_HESHTAG_COUNT);
+  pristine.addValidator(hashtagInput, checkNoRepetitions, INVALID_HESHTAG_UNIQUE);
+  pristine.addValidator(commentInput, checkMaxLengthComment, INVALID_COMMENT_LENGTH);
 };
 
 const validatePristine = () => pristine.validate();
 const resetPristine = () => pristine.reset();
 
-export { addValidator, validatePristine, resetPristine }
+export { addValidator, validatePristine, resetPristine };

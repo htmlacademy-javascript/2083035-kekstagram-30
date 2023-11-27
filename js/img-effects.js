@@ -87,7 +87,7 @@ const updateSlider = () => {
 
 const onEffectsChange = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
-    return
+    return;
   }
   chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
   imageElement.className = `effects__preview--${chosenEffect.name}`;
