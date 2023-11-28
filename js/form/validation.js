@@ -1,4 +1,4 @@
-import { checkLength, checkRepeats } from './util.js';
+import { checkLength, checkRepeats } from '../util/util.js';
 
 const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
 const HASHTAG_MAX_QUANTITY = 5;

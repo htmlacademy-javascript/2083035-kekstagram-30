@@ -1,8 +1,8 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey } from '../util/util.js';
 import { addValidator, validatePristine, resetPristine } from './validation.js';
 import { resetScale } from './img-scale.js';
 import { resetEffects, hideSlider } from './img-effects.js';
-import { sendData } from './api.js';
+import { sendData } from '../api/api.js';
 import { showSuccessSendDataMessage, showErrorSendDataMessage } from './user-message.js';
 
 const uploadForm = document.querySelector('.img-upload__form');

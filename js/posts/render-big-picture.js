@@ -61,17 +61,17 @@ const closeModal = () => {
   hideModal();
   commentsLoader.removeEventListener('click', onButtonLoadingClick);
   modalCloseButton.removeEventListener('click', onModalCloseButton);
-  showingComments = 0;
 };
 
 function onModalCloseButton() {
   closeModal();
-}
+};
 
 const renderBigPicture = (post) => {
   comments = post.comments;
   commentsList.innerHTML = '';
   totalCommentsCount.textContent = comments.length;
+  showingComments = 0;
   openModal();
   renderBigPictureInfo(post);
   showComments();

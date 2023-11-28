@@ -1,8 +1,8 @@
-import { renderPicturesGallery } from './thumbnails.js';
-import { initForm } from './form-upload-img.js';
-import { getData } from './api.js';
-import { showAlert } from './util.js';
-import { initFilter } from './sort.js';
+import { renderPicturesGallery } from './posts/thumbnails.js';
+import { initForm } from './form/form-upload-img.js';
+import { getData } from './api/api.js';
+import { showAlert } from './util/util.js';
+import { initFilter } from './posts/sort.js';
 
 getData()
   .then((posts) => {

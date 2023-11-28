@@ -1,5 +1,5 @@
 import { renderPicturesGallery } from './thumbnails.js';
-import { getRandomIndex, debounce } from './util.js';
+import { getRandomIndex, debounce } from '../util/util.js';
 
 const RANDOM_PHOTOS_AMOUNT = 10;
 
@@ -42,20 +42,28 @@ const repaint = (evt, filter, data) => {
   evt.target.classList.add('img-filters__button--active');
 };
 
-const debouncedRepaint = debounce((event, filter, data) => {
+const debounceRepaint = debounce((event, filter, data) => {
   repaint(event, filter, data);
 });
+
+const handleFilterClick = (event, filter, data) => {
+  debounceRepaint(event, filter, data);
+
+  const activeButtonClass = 'img-filters__button--active';
+  filterForm.querySelector(`.${activeButtonClass}`).classList.remove(activeButtonClass);
+  event.target.classList.add(activeButtonClass);
+};
 
 const initFilter = (data) => {
   filterSection.classList.remove('img-filters--inactive');
   defaultBtn.addEventListener('click', (evt) => {
-    debouncedRepaint(evt, Filter.DEFAULT, data);
+    handleFilterClick(evt, Filter.DEFAULT, data);
   });
   randomBtn.addEventListener('click', (evt) => {
-    debouncedRepaint(evt, Filter.RANDOM, data);
+    handleFilterClick(evt, Filter.RANDOM, data);
   });
   discussedBtn.addEventListener('click', (evt) => {
-    debouncedRepaint(evt, Filter.DISCUSSED, data);
+    handleFilterClick(evt, Filter.DISCUSSED, data);
   });
 };
 
