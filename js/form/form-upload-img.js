@@ -9,6 +9,7 @@ const uploadForm = document.querySelector('.img-upload__form');
 const uploadImgInput = document.querySelector('.img-upload__input');
 const uploadFormModal = document.querySelector('.img-upload__overlay');
 const formCloseButton = document.querySelector('.img-upload__cancel');
+const formSubmitButton = document.querySelector('.img-upload__submit');
 
 const openForm = () => {
   hideSlider();
@@ -20,9 +21,9 @@ const openForm = () => {
 
 const closeForm = () => {
   uploadForm.reset();
+  resetEffects();
   resetPristine();
   resetScale();
-  resetEffects();
   uploadFormModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
   formCloseButton.addEventListener('click', onCloseButtonClick);
@@ -53,6 +54,10 @@ function onUploadInputChange(evt) {
   };
 }
 
+const setSubmitButtonStatus = (value) => {
+  formSubmitButton.disabled = value;
+};
+
 const initForm = () => {
   uploadImgInput.addEventListener('change', onUploadInputChange);
   uploadForm.addEventListener('submit', (evt) => {
@@ -60,10 +65,12 @@ const initForm = () => {
 
     const isValid = validatePristine();
     if (isValid) {
+      setSubmitButtonStatus(true);
       sendData(new FormData(evt.target))
         .then(closeForm)
         .then(showSuccessSendDataMessage)
-        .catch(showErrorSendDataMessage);
+        .catch(showErrorSendDataMessage)
+        .catch(setSubmitButtonStatus(false));
     }
   });
   addValidator();

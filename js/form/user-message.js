@@ -10,8 +10,8 @@ const closeErrorPopupMessage = () => {
 };
 
 const onOutSideErrorClick = (evt) => {
-  const errorPopup = document.querySelector('.error__inner');
-  if (evt.target !== errorPopup) {
+  const errorPopupInner = document.querySelector('.error__inner');
+  if (evt.target !== errorPopupInner) {
     closeErrorPopupMessage();
   }
 };
@@ -29,7 +29,7 @@ function onDocumentKeydownError(evt) {
     evt.preventDefault();
     closeErrorPopupMessage();
   }
-};
+}
 
 const closeSuccessPopupMessage = () => {
   document.removeEventListener('keydown', onDocumentKeydownSuccess);
@@ -38,8 +38,8 @@ const closeSuccessPopupMessage = () => {
 };
 
 const onOutSideSuccessClick = (evt) => {
-  const successPopup = document.querySelector('.success__inner');
-  if (evt.target !== successPopup) {
+  const successPopupInner = document.querySelector('.success__inner');
+  if (evt.target !== successPopupInner) {
     closeSuccessPopupMessage();
   }
 };
@@ -57,6 +57,6 @@ function onDocumentKeydownSuccess(evt) {
     evt.preventDefault();
     closeSuccessPopupMessage();
   }
-};
+}
 
 export { showSuccessSendDataMessage, showErrorSendDataMessage };

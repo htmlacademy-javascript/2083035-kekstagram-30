@@ -29,10 +29,10 @@ const checkNoRepetitions = (value) => checkRepeats(createHashtage(value));
 const checkMaxLengthComment = () => checkLength(commentInput.value, COMMENT_MAX_LENGTH);
 
 const addValidator = () => {
-  pristine.addValidator(hashtagInput, checkHasHash, INVALID_HESHTAG_SYMBOLS);
-  pristine.addValidator(hashtagInput, checkMaxQuantity, INVALID_HESHTAG_COUNT);
-  pristine.addValidator(hashtagInput, checkNoRepetitions, INVALID_HESHTAG_UNIQUE);
-  pristine.addValidator(commentInput, checkMaxLengthComment, INVALID_COMMENT_LENGTH);
+  pristine.addValidator(hashtagInput, checkHasHash, INVALID_HESHTAG_SYMBOLS, 1, true);
+  pristine.addValidator(hashtagInput, checkMaxQuantity, INVALID_HESHTAG_COUNT,1, true);
+  pristine.addValidator(hashtagInput, checkNoRepetitions, INVALID_HESHTAG_UNIQUE,1, true);
+  pristine.addValidator(commentInput, checkMaxLengthComment, INVALID_COMMENT_LENGTH,1, true);
 };
 
 const validatePristine = () => pristine.validate();

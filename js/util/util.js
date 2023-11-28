@@ -8,7 +8,7 @@ const showAlert = () => {
   setTimeout(() => {
     errorElement.remove();
   }, ALERT_SHOW_TIME);
-}
+};
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 

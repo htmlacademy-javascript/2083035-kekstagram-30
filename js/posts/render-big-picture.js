@@ -65,7 +65,7 @@ const closeModal = () => {
 
 function onModalCloseButton() {
   closeModal();
-};
+}
 
 const renderBigPicture = (post) => {
   comments = post.comments;
