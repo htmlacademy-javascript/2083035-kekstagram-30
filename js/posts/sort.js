@@ -1,13 +1,13 @@
 import { renderPicturesGallery } from './thumbnails.js';
-import { debounce } from './util.js';
+import { getRandomIndex, debounce } from '../util/util.js';
 
 const RANDOM_PHOTOS_AMOUNT = 10;
 
 const filterSection = document.querySelector('.img-filters');
 const filterForm = document.querySelector('.img-filters__form');
-const defaultBtn = filterForm.querySelector('#filter-default');
-const randomBtn = filterForm.querySelector('#filter-random');
-const discussedBtn = filterForm.querySelector('#filter-discussed')
+const defaultBtn = document.querySelector('#filter-default');
+const randomBtn = document.querySelector('#filter-random');
+const discussedBtn = document.querySelector('#filter-discussed');
 
 const Filter = {
   DEFAULT: 'default',
@@ -15,14 +15,8 @@ const Filter = {
   DISCUSSED: 'discussed',
 };
 
-const getRandomIndex = (min, max) => {
-  return Math.floor(Math.random() * (max - min));
-};
-
 const filterHandlers = {
-  [Filter.DEFAULT]: (data) => {
-    return data;
-  },
+  [Filter.DEFAULT]: (data) => data,
   [Filter.RANDOM]: (data) => {
     const randomIndexList = [];
     const max = Math.min(RANDOM_PHOTOS_AMOUNT, data.length);
@@ -33,39 +27,44 @@ const filterHandlers = {
       }
     }
     return randomIndexList.map((index) => data[index]);
-
   },
-  [Filter.DISCUSSED]: (data) => {
-    return [...data].sort((item1, item2) => {
-      return item2.comments.length - item1.comments.length
-    });
-  },
-}
+  [Filter.DISCUSSED]: (data) => [...data].sort((item1, item2) => item2.comments.length - item1.comments.length),
+};
 
 const repaint = (evt, filter, data) => {
   const filteredData = filterHandlers[filter](data);
   const pictures = document.querySelectorAll('.picture');
-  pictures.forEach(item => item.remove());
+  pictures.forEach((item) => item.remove());
   renderPicturesGallery(filteredData);
 
   const currentActiveFilter = filterForm.querySelector('.img-filters__button--active');
   currentActiveFilter.classList.remove('img-filters__button--active');
-  evt.target.classList.add('img-filters__button--active')
+  evt.target.classList.add('img-filters__button--active');
 };
 
-const debouncedRepaint = debounce(repaint);
+const debounceRepaint = debounce((event, filter, data) => {
+  repaint(event, filter, data);
+});
+
+const handleFilterClick = (event, filter, data) => {
+  debounceRepaint(event, filter, data);
+
+  const activeButtonClass = 'img-filters__button--active';
+  filterForm.querySelector(`.${activeButtonClass}`).classList.remove(activeButtonClass);
+  event.target.classList.add(activeButtonClass);
+};
 
 const initFilter = (data) => {
   filterSection.classList.remove('img-filters--inactive');
   defaultBtn.addEventListener('click', (evt) => {
-    debouncedRepaint(evt, Filter.DEFAULT, data)
+    handleFilterClick(evt, Filter.DEFAULT, data);
   });
   randomBtn.addEventListener('click', (evt) => {
-    debouncedRepaint(evt, Filter.RANDOM, data)
+    handleFilterClick(evt, Filter.RANDOM, data);
   });
   discussedBtn.addEventListener('click', (evt) => {
-    debouncedRepaint(evt, Filter.DISCUSSED, data)
+    handleFilterClick(evt, Filter.DISCUSSED, data);
   });
 };
 
-export { initFilter }
+export { initFilter };
