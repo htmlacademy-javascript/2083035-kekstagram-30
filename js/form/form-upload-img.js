@@ -59,7 +59,6 @@ function onUploadInputChange(evt) {
   };
 }
 
-
 const initForm = () => {
   uploadImgInput.addEventListener('change', onUploadInputChange);
   uploadForm.addEventListener('submit', (evt) => {
@@ -71,7 +70,8 @@ const initForm = () => {
       sendData(new FormData(evt.target))
         .then(closeForm)
         .then(showSuccessSendDataMessage)
-        .catch(showErrorSendDataMessage);
+        .catch(showErrorSendDataMessage)
+        .catch(setSubmitButtonStatus(false))
     }
   });
   addValidator();
