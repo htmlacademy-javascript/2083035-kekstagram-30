@@ -19,11 +19,16 @@ const openForm = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
+const setSubmitButtonStatus = (isDisabled) => {
+  formSubmitButton.disabled = isDisabled;
+};
+
 const closeForm = () => {
   uploadForm.reset();
   resetEffects();
   resetPristine();
   resetScale();
+  setSubmitButtonStatus(false);
   uploadFormModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
   formCloseButton.addEventListener('click', onCloseButtonClick);
@@ -54,9 +59,6 @@ function onUploadInputChange(evt) {
   };
 }
 
-const setSubmitButtonStatus = (value) => {
-  formSubmitButton.disabled = value;
-};
 
 const initForm = () => {
   uploadImgInput.addEventListener('change', onUploadInputChange);
@@ -69,8 +71,7 @@ const initForm = () => {
       sendData(new FormData(evt.target))
         .then(closeForm)
         .then(showSuccessSendDataMessage)
-        .catch(showErrorSendDataMessage)
-        .catch(setSubmitButtonStatus(false));
+        .catch(showErrorSendDataMessage);
     }
   });
   addValidator();
