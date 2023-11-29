@@ -1,17 +1,5 @@
-import { renderPicturesGallery } from './posts/thumbnails.js';
 import { initForm } from './form/form-upload-img.js';
-import { getData } from './api/api.js';
-import { showAlert } from './util/util.js';
-import { initFilter } from './posts/sort.js';
+import { initPosts } from './posts/init-posts.js';
 
-getData()
-  .then((posts) => {
-    renderPicturesGallery(posts);
-    initFilter(posts);
-  })
-  .catch(
-    (err) => {
-      showAlert(err.message);
-    }
-  );
+initPosts();
 initForm();
