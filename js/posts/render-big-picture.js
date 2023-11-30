@@ -1,4 +1,4 @@
-import { hideModal, showModal } from './modal.js';
+import { isEscapeKey } from '../util/util.js';
 
 const COMMENTS_COUNT = 5;
 
@@ -52,20 +52,32 @@ const onButtonLoadingClick = () => {
 };
 
 const openModal = () => {
-  showModal();
-  commentsLoader.addEventListener('click', onButtonLoadingClick);
-  modalCloseButton.addEventListener('click', onModalCloseButton);
+  bigPicture.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const closeModal = () => {
-  hideModal();
-  commentsLoader.removeEventListener('click', onButtonLoadingClick);
-  modalCloseButton.removeEventListener('click', onModalCloseButton);
+  bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 function onModalCloseButton() {
   closeModal();
 }
+
+function onDocumentKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeModal();
+  }
+}
+
+const addBigPictureListeners = () => {
+  commentsLoader.addEventListener('click', onButtonLoadingClick);
+  modalCloseButton.addEventListener('click', onModalCloseButton);
+};
 
 const renderBigPicture = (post) => {
   comments = post.comments;
@@ -77,4 +89,4 @@ const renderBigPicture = (post) => {
   showComments();
 };
 
-export { renderBigPicture };
+export { renderBigPicture, addBigPictureListeners };
