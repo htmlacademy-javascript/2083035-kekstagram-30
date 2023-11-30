@@ -18,8 +18,7 @@ const createHashtag = (value) => value.trim().split(' ').filter(Boolean);
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div',
-  errorTextClass: 'text__error'
+  errorTextClass: 'img-upload__field-wrapper--error',
 });
 
 const checkHasHash = (value) => hashtagInput.value !== '' ? createHashtag(value).every((hashtag) => HASHTAG_REGEX.test(hashtag)) : true;
